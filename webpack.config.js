@@ -19,7 +19,7 @@ module.exports = {
         options: {
           name: '[name]_[hash].[ext]',
           outputPath: 'images/',
-          limit: 10240 //图片小于10k时打包到js文件里面
+          limit: 1024 //图片小于10k时打包成data-url文件里面
         }
       }
     }, {
@@ -31,11 +31,9 @@ module.exports = {
           options: {
             importLoaders: 2
           }
-        }, {
-          loader: 'sass-loader'
-        }, {
-          loader: 'postcss-loader'
-        }
+        },
+        'sass-loader',
+        'postcss-loader'
       ]
     }, {
       test: /\.(eot|ttf|svg)$/,
