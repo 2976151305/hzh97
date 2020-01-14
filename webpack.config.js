@@ -10,7 +10,10 @@ const { CleanWebpackPlugin } = require('clean-webpack-plugin') // 打包前执�
  */
 module.exports = {
   mode: 'production',
-  entry: './src/main.js',
+  entry: {
+    main: './src/main.js',
+    sub: './src/main.js'
+  },
   module: {
     rules: [{
       test: /\.(jpg|jpeg|png|gif)$/,
@@ -51,6 +54,7 @@ module.exports = {
     template: 'index.html'
   }), new CleanWebpackPlugin()],
   output: {
+    filename: '[name]_[hash].js',
     path: path.resolve(__dirname, 'dist')
   }
 }
