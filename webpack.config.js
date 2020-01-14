@@ -9,10 +9,15 @@ const { CleanWebpackPlugin } = require('clean-webpack-plugin') // 打包前执�
  * 4. module 模块规则
  */
 module.exports = {
-  mode: 'production',
+  mode: 'development',
+  devtool: 'cheap-module-eval-source-map', // 模式为development时, devtool默认为source-map
   entry: {
-    main: './src/main.js',
-    sub: './src/main.js'
+    main: './src/main.js'
+  },
+  devServer: {
+    contentBase: './dist',
+    open: true,
+    port: 8088
   },
   module: {
     rules: [{
@@ -22,7 +27,7 @@ module.exports = {
         options: {
           name: '[name]_[hash].[ext]',
           outputPath: 'images/',
-          limit: 1024 //图片小于10k时打包成data-url文件里面
+          limit: 10240 //图片小于10k时打包到js文件里面
         }
       }
     }, {
@@ -34,9 +39,11 @@ module.exports = {
           options: {
             importLoaders: 2
           }
-        },
-        'sass-loader',
-        'postcss-loader'
+        }, {
+          loader: 'sass-loader'
+        }, {
+          loader: 'postcss-loader'
+        }
       ]
     }, {
       test: /\.(eot|ttf|svg)$/,
@@ -52,7 +59,8 @@ module.exports = {
     template: 'index.html'
   }), new CleanWebpackPlugin()],
   output: {
-    filename: '[name]_[hash].js',
+    // publicPath: 'http://cdn.hzh97.com', // 静态资源放入cdn中
+    filename: '[name].js',
     path: path.resolve(__dirname, 'dist')
   }
 }
